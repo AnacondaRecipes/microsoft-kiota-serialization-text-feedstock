@@ -1,0 +1,46 @@
+{% set name = "microsoft-kiota-serialization-text" %}
+{% set version = "1.0.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/microsoft_kiota_serialization_text-{{ version }}.tar.gz
+  sha256: c3dd3f409b1c4f4963bd1e41d51b65f7e53e852130bb441d79b77dad88ee76ed
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python
+    - flit-core >=3.2,<4
+    - pip
+  run:
+    - python
+    - microsoft-kiota-abstractions >=1.0.0,<2.0.0
+    - python-dateutil >=2.8.2
+
+test:
+  imports:
+    - microsoft_kiota_serialization_text
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  summary: Implementation of Kiota Serialization interfaces for text/plain
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  anaconda-services:
+    ref: https://anaconda.zendesk.com/agent/tickets/48409
+    reason: Dependenccy for msgraph-sdk
+  recipe-maintainers:
+    - ianaobi
+
